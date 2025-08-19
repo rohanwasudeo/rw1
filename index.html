@@ -39,6 +39,12 @@
       </div>
     </div>
   </div>
+  <!-- Footer -->
+  <footer class="footer mt-auto py-3 bg-light text-center" id="main-footer">
+    <div class="container">
+      <span class="text-muted">&copy; 2024 Bootstrap Todo List</span>
+    </div>
+  </footer>
   <script>
     const form = document.getElementById('todo-form');
     const input = document.getElementById('todo-input');
@@ -48,6 +54,7 @@
     const card = document.getElementById('todo-card');
     const cardHeader = document.getElementById('todo-card-header');
     const darkModeLabel = document.getElementById('darkModeLabel');
+    const footer = document.getElementById('main-footer');
 
     // Load dark mode preference
     if (localStorage.getItem('darkMode') === 'true') {
@@ -68,7 +75,13 @@
         card.classList.add('bg-dark');
         cardHeader.classList.remove('bg-primary', 'text-white');
         cardHeader.classList.add('bg-dark', 'text-light', 'border-bottom');
-        darkModeLabel.textContent = '☀️';
+        darkModeLabel.textContent = '\u2600\ufe0f';
+        if (footer) {
+          footer.classList.remove('bg-light');
+          footer.classList.add('bg-dark');
+          footer.querySelector('span').classList.remove('text-muted');
+          footer.querySelector('span').classList.add('text-light');
+        }
       } else {
         body.classList.remove('bg-dark');
         body.classList.add('bg-light');
@@ -76,7 +89,13 @@
         card.classList.add('bg-light');
         cardHeader.classList.remove('bg-dark', 'text-light', 'border-bottom');
         cardHeader.classList.add('bg-primary', 'text-white');
-        darkModeLabel.textContent = '🌙';
+        darkModeLabel.textContent = '\ud83c\udf19';
+        if (footer) {
+          footer.classList.remove('bg-dark');
+          footer.classList.add('bg-light');
+          footer.querySelector('span').classList.remove('text-light');
+          footer.querySelector('span').classList.add('text-muted');
+        }
       }
     }
 
