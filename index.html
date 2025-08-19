@@ -5,14 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bootstrap Todo List</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body.bg-dark, .card.bg-dark, .card-header.bg-dark {
+      color: #f8f9fa !important;
+    }
+    .form-switch .form-check-input {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body class="bg-light">
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card shadow">
-          <div class="card-header bg-primary text-white">
+        <div class="card shadow bg-light" id="todo-card">
+          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="todo-card-header">
             <h3 class="mb-0">Todo List</h3>
+            <div class="form-check form-switch ms-3">
+              <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+              <label class="form-check-label" for="darkModeSwitch" id="darkModeLabel">🌙</label>
+            </div>
           </div>
           <div class="card-body">
             <form id="todo-form" class="d-flex mb-3">
@@ -31,6 +43,42 @@
     const form = document.getElementById('todo-form');
     const input = document.getElementById('todo-input');
     const list = document.getElementById('todo-list');
+    const darkModeSwitch = document.getElementById('darkModeSwitch');
+    const body = document.body;
+    const card = document.getElementById('todo-card');
+    const cardHeader = document.getElementById('todo-card-header');
+    const darkModeLabel = document.getElementById('darkModeLabel');
+
+    // Load dark mode preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      setDarkMode(true);
+      darkModeSwitch.checked = true;
+    }
+
+    darkModeSwitch.addEventListener('change', function() {
+      setDarkMode(this.checked);
+      localStorage.setItem('darkMode', this.checked);
+    });
+
+    function setDarkMode(enabled) {
+      if (enabled) {
+        body.classList.remove('bg-light');
+        body.classList.add('bg-dark');
+        card.classList.remove('bg-light');
+        card.classList.add('bg-dark');
+        cardHeader.classList.remove('bg-primary', 'text-white');
+        cardHeader.classList.add('bg-dark', 'text-light', 'border-bottom');
+        darkModeLabel.textContent = '☀️';
+      } else {
+        body.classList.remove('bg-dark');
+        body.classList.add('bg-light');
+        card.classList.remove('bg-dark');
+        card.classList.add('bg-light');
+        cardHeader.classList.remove('bg-dark', 'text-light', 'border-bottom');
+        cardHeader.classList.add('bg-primary', 'text-white');
+        darkModeLabel.textContent = '🌙';
+      }
+    }
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
